@@ -1,0 +1,11 @@
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        unordered_map<char, int> mpps, mppt;
+        for(auto i : s)
+            mpps[i]++;
+        for(auto i : t)
+            mppt[i]++;
+        return mpps == mppt;
+    }
+};
