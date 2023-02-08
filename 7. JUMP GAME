@@ -1,0 +1,42 @@
+// RECURSIVE SOLUTION
+
+class Solution {
+private:
+    long long int solve(vector<int>& nums, int cur, int dest) {
+        if(cur >= dest)
+            return 0;
+        long long int ans = INT_MAX;
+        for(int i = 1; i <= nums[cur]; i++)
+            ans = min(ans, 1 + solve(nums, cur+i, dest));
+        return ans;
+    }
+public:
+    int jump(vector<int>& nums) {
+        int n = nums.size();
+        return solve(nums, 0, n-1);
+    }
+};
+
+
+
+// MEMOIZATION
+
+class Solution {
+private:
+    long long int solve(vector<int>& nums, int cur, int dest, vector<int>& dp) {
+        if(cur >= dest)
+            return 0;
+        if(dp[cur] != -1)
+            return dp[cur];
+        long long int ans = INT_MAX;
+        for(int i = 1; i <= nums[cur]; i++)
+            ans = min(ans, 1 + solve(nums, cur+i, dest, dp));
+        return dp[cur] = ans;
+    }
+public:
+    int jump(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n, -1);
+        return solve(nums, 0, n-1, dp);
+    }
+};
