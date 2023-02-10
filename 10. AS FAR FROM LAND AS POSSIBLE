@@ -1,0 +1,53 @@
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int ans = -1;
+        queue<pair<int, int>> q;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++)
+                if(grid[i][j])
+                    q.push({i, j});
+        }
+        int dx[] = {-1, 0, +1, 0};
+        int dy[] = {0, +1, 0, -1};
+        while(!q.empty()) {
+            int r = q.front().first;
+            int c = q.front().second;
+            q.pop();
+            ans = grid[r][c];
+            for(int i = 0; i < 4; i++) {
+                int newr = r + dx[i];
+                int newc = c + dy[i];
+                if(min(newr, newc) >= 0 && max(newr, newc) < n && grid[newr][newc] == 0) {
+                    q.push({newr, newc});
+                    grid[newr][newc] = grid[r][c] + 1;
+                }
+            }
+        }
+        return ans <= 1 ? -1 : ans-1; 
+    }
+};
+
+// PYTHON3 Solution
+
+class Solution:
+    def maxDistance(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        q = deque()
+        for r in range(n):
+            for c in range(n):
+                if grid[r][c]:
+                    q.append([r, c])
+        ans = -1
+        dr = [-1, 0, +1, 0]
+        dc = [0, +1, 0, -1]
+        while q:
+            r, c = q.popleft()
+            ans = grid[r][c]
+            for i in range(4):
+                newr, newc = r+dr[i], c+dc[i]
+                if(min(newr, newc) >= 0 and max(newr, newc) < n and grid[newr][newc] == 0):
+                    q.append([newr, newc])
+                    grid[newr][newc] = grid[r][c] + 1
+        return ans - 1 if ans > 1 else -1
