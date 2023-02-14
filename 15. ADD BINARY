@@ -1,0 +1,46 @@
+// C++ CODE
+
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string ans = "";
+        int carry = 0;
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
+        int n = a.size(), m = b.size();
+        for(int i = 0; i < max(n, m); i++) {
+            int digita = 0, digitb = 0;
+            if(i < n)   
+                digita = (a[i] - 'a') - ('0' - 'a');
+            if(i < m)
+                digitb = (b[i] - 'a') - ('0' - 'a');
+            int total = digita + digitb + carry;
+            string ch = to_string(total % 2);
+            ans = ch + ans;
+            carry = total / 2;
+        }
+        if(carry)
+            ans = "1" + ans;
+        return ans;
+    }
+};
+
+
+
+// PYTHON3 CODE
+
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        ans = ""
+        carry = 0
+        a, b = a[::-1], b[::-1]
+        for i in range(max(len(a), len(b))):
+            digita = ord(a[i]) - ord('0') if i < len(a) else 0
+            digitb = ord(b[i]) - ord('0') if i < len(b) else 0
+            total = digita + digitb + carry
+            char = str(total % 2)
+            ans = char + ans
+            carry = total // 2
+        if carry:
+            ans = "1" + ans
+        return ans;
